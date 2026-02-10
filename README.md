@@ -86,8 +86,6 @@ Within this project, NFQ serves as a baseline batch reinforcement learning appro
 
 ### Deep Q-Network (DQN)
 
-### Deep Q-Network (DQN)
-
 Deep Q-Network (DQN) is an online value-based reinforcement learning algorithm that combines Q-learning with deep neural networks as function approximators. Unlike batch methods such as NFQ, DQN updates the action-value function incrementally while interacting with the environment, allowing the agent to continuously refine its policy.
 
 In this project, the Q-function is approximated by a fully connected neural network that maps the current state to Q-values for all available actions. Training is performed online using a replay buffer that stores past transition experiences. At each optimization step, mini-batches are sampled uniformly from the buffer to reduce temporal correlations between consecutive samples.
@@ -367,6 +365,7 @@ python compare_pairs_episodes.py --results results --seeds 0 1 2 --smooth 50 --o
   https://github.com/robertoschiavone/flappy-bird-env
 - Berta, R. (2025). *Neural Fitted Q-Iteration*. Course lecture notes, Reinforcement Learning.
 - Berta, R. (2025). *Deep Q-Networks and Extensions*. Course lecture notes, Reinforcement Learning.
+
 
 
 
