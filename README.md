@@ -219,6 +219,30 @@ Preliminary experiments revealed that the magnitude of the survival reward plays
 
 Reducing the survival reward to a sufficiently small value restored the dominance of the environment-defined pipe-passing reward and led to more goal-oriented behavior. This highlights the importance of carefully balancing rewards.
 
+### Evaluation Performance
+
+[Grafico 1: NFQ vs DQN – eval]
+[Grafico 2: DQN vs DDQN – eval]
+
+**NFQ vs DQN – Evaluation Performance.**  
+Mean evaluation return as a function of environment interaction steps, aggregated across three random seeds. The shaded area represents the minimum and maximum performance observed across seeds. Evaluation is performed using a greedy policy, providing a clean estimate of policy quality.
+
+**DQN vs DDQN – Evaluation Performance.**  
+Comparison of evaluation returns for DQN and Double DQN under identical experimental conditions. Results are aggregated across three random seeds and reported as mean with min–max variability bands. The improved stability and higher asymptotic performance of Double DQN highlight the impact of reducing overestimation bias.
+
+
+### Training Dynamics
+
+[Grafico 3: DQN vs NFQ – training episodes]
+[Grafico 4: DQN vs DDQN – training episodes]
+
+**DQN vs NFQ – Training Episode Returns.**  
+Average episode return observed during training as a function of training episodes. These curves reflect learning dynamics under ε-greedy exploration and are influenced by exploration noise. They are reported to illustrate differences in learning stability rather than final policy quality.
+
+**DQN vs DDQN – Training Episode Returns.**  
+Training episode returns for DQN and Double DQN under ε-greedy exploration. While both algorithms exhibit similar learning trends during training, evaluation-based results provide a clearer comparison of final policy performance.
+
+
 ### Discussion
 
 The results highlight the advantages of online deep reinforcement learning methods over batch-based approaches in dynamic control tasks. Double DQN emerges as the most reliable algorithm in this setting, combining improved stability with higher final performance.
@@ -229,7 +253,112 @@ All reported trends are consistent across multiple random seeds, strengthening t
 
 ## How to Run the Code
 
+This section describes how to reproduce the experiments and generate the results reported in this repository.
+
+### Requirements
+
+The project requires Python 3.10 or later. The main dependencies are:
+- `gymnasium`
+- `flappy-bird-gymnasium`
+- `torch`
+- `numpy`
+- `pandas`
+- `matplotlib`
+
+It is recommended to run the code inside a dedicated Python virtual environment to avoid dependency conflicts.
+A virtual environment can be created and activated as follows (i used a Windows pc):
+
+```bash
+python -m venv ReinfLearn-env
+ReinfLearn-env\Scripts\activate 
+```
+
+Dependencies can be installed using pip:
+```bash
+pip install gymnasium flappy-bird-gymnasium torch numpy pandas matplotlib
+```
+To make sure that gymnasium library is correctly installed you can run:
+```bash
+python test_flappy_gymnasium.py
+```
+
+### Training the agents
+
+Each algorithm can be trained independently by running the corresponding script:
+```bash
+python nfq_flappy.py
+python dqn_flappy.py
+python ddqn_flappy.py
+```
+Each execution performs a single training run with a fixed random seed and saves all outputs (metrics, evaluation scores, and model checkpoints) to a dedicated directory inside the results/ folder.
+
+To reproduce the multi-seed experiments, the training scripts should be executed multiple times with different seed values.
+I trained each algorithm respectively with seed 0, 1 and 2.
+
+Each training run saves its outputs to a dedicated directory called "algorithm_seedX" (for example ddqn_seed0), which contains all artifacts required for analysis, comparison, and reproducibility:
+- plots/: Generated figures, including evaluation curves (e.g., evaluation return vs environment steps) and other run-specific visualizations;
+- videos/: Optional recordings of the agent interacting with the environment using the learned policy, intended for qualitative inspection;
+- Model checkpoints (*.pt): Saved network weights, typically including the best-performing model observed during evaluation and the   final model at the end of training;
+- eval_scores.npy: NumPy array storing evaluation returns collected during periodic greedy evaluations;
+- eval_steps.npy: NumPy array storing the corresponding environment step counts for each evaluation;
+- metrics.csv: CSV file containing logged training and evaluation metrics used for post-hoc analysis and for generating aggregated comparison plots.
+
+### Generating Comparison Plots
+
+**This analysis step must be performed after all training runs have been completed**, as it relies on the `results/` directory.
+Aggregated comparison plots across multiple random seeds can be generated using the provided analysis scripts. These scripts load the metrics saved by individual runs, align evaluation curves, and compute aggregated statistics such as mean and variability across seeds.
+
+The following scripts are provided:
+- `compare.py` – generates aggregated evaluation curves (mean ± min/max) for multiple algorithms and produces summary statistics.
+- `compare_pairs.py` – generates pairwise aggregated evaluation comparisons between selected algorithms.
+- `compare_pairs_episodes.py` – generates pairwise comparisons based on training episode returns to analyze learning dynamics.
+
+To run the analysis scripts, execute the following commands after completing the training runs:
+
+```bash
+python compare.py --results results --seeds 0 1 2 --smooth 3 --outdir compare_out
+python compare_pairs.py --results results --seeds 0 1 2 --smooth 3 --outdir compare_pairs_out
+python compare_pairs_episodes.py --results results --seeds 0 1 2 --smooth 50 --outdir compare_pairs_out
+```
+
 ## Repository Structure
+
+.
+├── results/           # Per-run output directories (one per algorithm and seed)
+│   ├── ddqn_seed0/    # Metrics, checkpoints, plots, and videos for a single run
+│   ├── ddqn_seed1/    # Metrics, checkpoints, plots, and videos for a single run
+│   ├── ddqn_seed2/    # Metrics, checkpoints, plots, and videos for a single run
+│   ├── dqn_seed0/     # Metrics, checkpoints, plots, and videos for a single run
+│   ├── dqn_seed1/     # Metrics, checkpoints, plots, and videos for a single run
+│   ├── dqn_seed2/     # Metrics, checkpoints, plots, and videos for a single run
+│   ├── nfq_seed0/     # Metrics, checkpoints, plots, and videos for a single run
+│   ├── nfq_seed1/     # Metrics, checkpoints, plots, and videos for a single run
+│   └── nfq_seed2/     # Metrics, checkpoints, plots, and videos for a single run
+│
+├── compare_pairs_out/                  # Aggregated evaluation comparison outputs
+│   ├── nfq_vs_dqn.png                  # Aggregated evaluation plots (mean ± min/max)
+│   ├── dqn_vs_ddqn.png                 # Aggregated evaluation plots (mean ± min/max)
+│   ├── ddqn_mean_min_max.csv           # Summary tables and aggregated statistics
+│   ├── dqn_mean_min_max.csv            # Summary tables and aggregated statistics
+│   ├── nfq_mean_min_max.csv            # Summary tables and aggregated statistics
+│   └── summary_pairs.csv               # Summary tables and aggregated statistics
+│
+├── plots_pairs/                    # Aggregated training-dynamics plots (episode-based)
+│   ├── dqn_vs_ddqn_episodes.png    # Aggregated evaluation plots (mean ± min/max)
+│   └── dqn_vs_nfq_episodes.png     # Aggregated evaluation plots (mean ± min/max)
+│
+├── dqn_flappy.py              # DQN training script
+├── ddqn_flappy.py             # Double DQN training script
+├── nfq_flappy.py              # NFQ training script
+│
+├── compare.py                 # Aggregated analysis across multiple algorithms and seeds
+├── compare_pairs.py           # Pairwise evaluation comparison script
+├── compare_pairs_episodes.py  # Pairwise training-dynamics comparison script
+│
+├── test_flappy_gymnasium.py   # Environment sanity check script
+├── README.md                  # Project documentation
+└── ReinfLearn-env/            # Python virtual environment
+
 
 ## References
 
@@ -237,4 +366,5 @@ All reported trends are consistent across multiple random seeds, strengthening t
   https://github.com/robertoschiavone/flappy-bird-env
 - Berta, R. (2025). *Neural Fitted Q-Iteration*. Course lecture notes, Reinforcement Learning.
 - Berta, R. (2025). *Deep Q-Networks and Extensions*. Course lecture notes, Reinforcement Learning.
+
 
