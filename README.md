@@ -324,40 +324,41 @@ python compare_pairs_episodes.py --results results --seeds 0 1 2 --smooth 50 --o
 ## Repository Structure
 
 .
-├── results/           # Per-run output directories (one per algorithm and seed)
-│   ├── ddqn_seed0/    # Metrics, checkpoints, plots, and videos for a single run
-│   ├── ddqn_seed1/    # Metrics, checkpoints, plots, and videos for a single run
-│   ├── ddqn_seed2/    # Metrics, checkpoints, plots, and videos for a single run
-│   ├── dqn_seed0/     # Metrics, checkpoints, plots, and videos for a single run
-│   ├── dqn_seed1/     # Metrics, checkpoints, plots, and videos for a single run
-│   ├── dqn_seed2/     # Metrics, checkpoints, plots, and videos for a single run
-│   ├── nfq_seed0/     # Metrics, checkpoints, plots, and videos for a single run
-│   ├── nfq_seed1/     # Metrics, checkpoints, plots, and videos for a single run
-│   └── nfq_seed2/     # Metrics, checkpoints, plots, and videos for a single run
+├── results/                         # Per-run output directories (one per algorithm and seed)
+│   ├── ddqn_seed0/                  # Metrics, checkpoints, plots, and videos for a single run
+│   ├── ddqn_seed1/
+│   ├── ddqn_seed2/
+│   ├── dqn_seed0/
+│   ├── dqn_seed1/
+│   ├── dqn_seed2/
+│   ├── nfq_seed0/
+│   ├── nfq_seed1/
+│   └── nfq_seed2/
 │
-├── compare_pairs_out/                  # Aggregated evaluation comparison outputs
-│   ├── nfq_vs_dqn.png                  # Aggregated evaluation plots (mean ± min/max)
-│   ├── dqn_vs_ddqn.png                 # Aggregated evaluation plots (mean ± min/max)
-│   ├── ddqn_mean_min_max.csv           # Summary tables and aggregated statistics
-│   ├── dqn_mean_min_max.csv            # Summary tables and aggregated statistics
-│   ├── nfq_mean_min_max.csv            # Summary tables and aggregated statistics
-│   └── summary_pairs.csv               # Summary tables and aggregated statistics
+├── compare_pairs_out/               # Aggregated evaluation comparison outputs
+│   ├── nfq_vs_dqn.png               # Evaluation plots (mean ± min/max)
+│   ├── dqn_vs_ddqn.png              # Evaluation plots (mean ± min/max)
+│   ├── nfq_mean_min_max.csv         # Aggregated statistics
+│   ├── dqn_mean_min_max.csv
+│   ├── ddqn_mean_min_max.csv
+│   └── summary_pairs.csv            # Summary comparison table
 │
-├── plots_pairs/                    # Aggregated training-dynamics plots (episode-based)
-│   ├── dqn_vs_ddqn_episodes.png    # Aggregated evaluation plots (mean ± min/max)
-│   └── dqn_vs_nfq_episodes.png     # Aggregated evaluation plots (mean ± min/max)
+├── plots_pairs/                     # Aggregated training-dynamics plots (episode-based)
+│   ├── dqn_vs_ddqn_episodes.png
+│   └── dqn_vs_nfq_episodes.png
 │
-├── dqn_flappy.py              # DQN training script
-├── ddqn_flappy.py             # Double DQN training script
-├── nfq_flappy.py              # NFQ training script
+├── dqn_flappy.py                    # DQN training script
+├── ddqn_flappy.py                   # Double DQN training script
+├── nfq_flappy.py                    # NFQ training script
 │
-├── compare.py                 # Aggregated analysis across multiple algorithms and seeds
-├── compare_pairs.py           # Pairwise evaluation comparison script
-├── compare_pairs_episodes.py  # Pairwise training-dynamics comparison script
+├── compare.py                       # Aggregated analysis across algorithms and seeds
+├── compare_pairs.py                 # Pairwise evaluation comparison script
+├── compare_pairs_episodes.py        # Pairwise training-dynamics comparison script
 │
-├── test_flappy_gymnasium.py   # Environment sanity check script
-├── README.md                  # Project documentation
-└── ReinfLearn-env/            # Python virtual environment
+├── test_flappy_gymnasium.py         # Environment sanity check script
+├── README.md                        # Project documentation
+└── ReinLearn-env/                   # Python virtual environment (optional)
+
 
 
 ## References
@@ -366,5 +367,6 @@ python compare_pairs_episodes.py --results results --seeds 0 1 2 --smooth 50 --o
   https://github.com/robertoschiavone/flappy-bird-env
 - Berta, R. (2025). *Neural Fitted Q-Iteration*. Course lecture notes, Reinforcement Learning.
 - Berta, R. (2025). *Deep Q-Networks and Extensions*. Course lecture notes, Reinforcement Learning.
+
 
 
