@@ -320,7 +320,7 @@ python compare_pairs_episodes.py --results results --seeds 0 1 2 --smooth 50 --o
 ```
 
 ## Repository Structure
-
+```
 .
 ├── results/                         # Per-run output directories (one per algorithm and seed)
 │   ├── ddqn_seed0/                  # Metrics, checkpoints, plots, and videos for a single run
@@ -356,7 +356,7 @@ python compare_pairs_episodes.py --results results --seeds 0 1 2 --smooth 50 --o
 ├── test_flappy_gymnasium.py         # Environment sanity check script
 ├── README.md                        # Project documentation
 └── ReinLearn-env/                   # Python virtual environment (optional)
-
+```
 
 
 ## References
@@ -365,6 +365,7 @@ python compare_pairs_episodes.py --results results --seeds 0 1 2 --smooth 50 --o
   https://github.com/robertoschiavone/flappy-bird-env
 - Berta, R. (2025). *Neural Fitted Q-Iteration*. Course lecture notes, Reinforcement Learning.
 - Berta, R. (2025). *Deep Q-Networks and Extensions*. Course lecture notes, Reinforcement Learning.
+
 
 
 
