@@ -52,51 +52,15 @@ Design Justifications
 
 ## Algorithmic Approaches
 
-### Neural Fitted Q-Iteration (NFQ)
+The project evaluates three value-based reinforcement learning algorithms to solve the Flappy Bird task. Following the course's focus on comparative analysis, the algorithms were chosen to represent both batch and online learning paradigms.
 
-Neural Fitted Q-Iteration (NFQ) is a batch reinforcement learning algorithm that extends classical Q-learning by using a neural network to approximate the action-value function over a continuous state space. Rather than performing incremental online updates, NFQ alternates between data collection and supervised learning phases, framing value estimation as a regression problem.
+**Selected Methods**
+- Neural Fitted Q-Iteration (NFQ): Used as a batch RL baseline. It frames value estimation as a regression problem, alternating between data collection and offline optimization.
+- Deep Q-Network (DQN): An online method that introduces a replay buffer and a target network to stabilize training in deep function approximation.
+- Double Deep Q-Network (DDQN): An evolution of DQN designed to mitigate the overestimation of action values by decoupling action selection from evaluation.
 
-In this implementation, the Q-function is approximated by a fully connected neural network that takes the state as input and outputs Q-values for all available actions. Training data consists of batches of transition tuples (s, a, r, s′, done) collected through interaction with the environment.
-
-During data collection, an ε-greedy behavior policy is employed to balance exploration and exploitation. The exploration rate ε is kept fixed throughout training, in line with the batch-oriented nature of NFQ, ensuring sufficient coverage of the state–action space during experience gathering.
-
-For each batch of collected transitions, target Q-values are computed using a temporal-difference bootstrap rule with a fixed target within each iteration. The network parameters are optimized by minimizing the mean squared temporal-difference error over multiple training epochs using a gradient-based optimizer.
-
-Training is performed over a predefined number of episodes, after which the learned policy is evaluated using a greedy action selection strategy. This fixed training protocol reflects the offline-style learning paradigm of NFQ and contrasts with the fully online updates used by deep Q-learning methods.
-
-Within this project, NFQ serves as a baseline batch reinforcement learning approach, providing a point of comparison for analyzing the benefits and limitations of online deep reinforcement learning algorithms in a reactive control task such as Flappy Bird.
-
-### Deep Q-Network (DQN)
-
-Deep Q-Network (DQN) is an online value-based reinforcement learning algorithm that combines Q-learning with deep neural networks as function approximators. Unlike batch methods such as NFQ, DQN updates the action-value function incrementally while interacting with the environment, allowing the agent to continuously refine its policy.
-
-In this project, the Q-function is approximated by a fully connected neural network that maps the current state to Q-values for all available actions. Training is performed online using a replay buffer that stores past transition experiences. At each optimization step, mini-batches are sampled uniformly from the buffer to reduce temporal correlations between consecutive samples.
-
-Exploration is handled through a decaying ε-greedy strategy. At the beginning of training, ε is set to a high value to promote extensive exploration of the state–action space. The exploration rate is gradually reduced over a predefined number of episodes, after which it is kept fixed at a small minimum value to allow mostly greedy behavior while retaining occasional exploration.
-
-The agent is trained for a fixed number of episodes. During the initial portion of training, the emphasis is placed on exploration, while later episodes increasingly focus on exploitation of the learned action-value function.
-
-To stabilize learning, a separate target network is employed to compute bootstrap targets. The target network is periodically synchronized with the online network, ensuring more stable target values during optimization.
-
-Network parameters are optimized by minimizing the mean squared temporal-difference error using stochastic gradient descent (SGD). This choice is taken reflectiing on the low-dimensional state representation of the environment and allows for stable and interpretable optimization dynamics.
-
-Throughout training, the agent’s performance is periodically evaluated using a greedy policy derived from the current Q-function. DQN serves as the primary online deep reinforcement learning baseline against which both NFQ and Double DQN are compared.
-
-### Double Deep Q-Network (DDQN)
-
-Double Deep Q-Network (DDQN) is an extension of the standard DQN algorithm designed to reduce the overestimation bias introduced by the max operator in the Q-learning target. In standard DQN, the same network is used both to select and to evaluate the action in the next state, which can lead to systematically optimistic value estimates.
-
-DDQN addresses this issue by decoupling action selection and action evaluation. The online network is used to select the action with the highest estimated value in the next state, while the target network is used to evaluate the value of the selected action. This simple modification results in more accurate and stable target estimates without introducing additional architectural complexity.
-
-In this project, DDQN retains all core components of the DQN implementation, including online learning, experience replay, target networks, and a decaying ε-greedy exploration strategy. The only difference lies in the computation of the bootstrap target during optimization.
-
-Training is performed under the same experimental protocol used for DQN, including the same network architecture, optimizer, exploration schedule, and number of training episodes. This ensures that any observed performance differences can be attributed specifically to the double Q-learning update rather than to confounding factors.
-
-The strong similarity between the DQN and DDQN implementations is intentional, i kept all components identical except for the target computation rule so that the comparison isolates the effect of double Q-learning on stability and performance.
-
-## Implementation Details
-
-All agents are implemented in Python using a common software stack to ensure consistency and comparability across algorithms. The core components of the implementation are shared whenever possible, with algorithm-specific differences isolated to the learning and update rules.
+**Implementation Strategy**
+Instead of complex architectures, all agents share a fully connected neural network and are optimized via SGD. This setup ensures that differences in performance, such as DDQN’s superior stability or NFQ’s sample inefficiency, are directly attributable to the algorithmic logic rather than representational capacity. Hyperparameters like the discount factor $\gamma$ and the $\epsilon$-greedy schedule were kept consistent across runs to ensure a fair systematic comparison.
 
 ### Software Stack
 
@@ -396,10 +360,18 @@ python compare_training_pairs.py --results results --seeds 0 1 2 --smooth 50 --o
   https://github.com/robertoschiavone/flappy-bird-env
 - Berta, R. (2025). *Neural Fitted Q-Iteration*. Course lecture notes, Reinforcement Learning.
 - Berta, R. (2025). *Deep Q-Networks and Extensions*. Course lecture notes, Reinforcement Learning.
+- Gymnasium: Farama Foundation. Gymnasium: An open source interface for reinforcement learning algorithms. https://gymnasium.farama.org/
+- PyTorch: Paszke, A., et al. PyTorch: An Imperative Style, High-Performance Deep Learning Library. https://pytorch.org/
+- DQN: Mnih, V., et al. (2015). Human-level control through deep reinforcement learning. Nature.
+- Double DQN: van Hasselt, H., Guez, A., & Silver, D. (2016). Deep Reinforcement Learning with Double Q-Learning. AAAI Conference on Artificial Intelligence.
+- NFQ: Riedmiller, M. (2005). Neural Fitted Q Iteration – First Experiences with a Data Efficient Neural Reinforcement Learning Method. Machine Learning: ECML.
+- Miguel Morales, Grokking Deep Reinforcement Learning, Manning
+- Richard S. Sutton and Andrew G. Barto, Reinforcement Learning: An Introduction, MIT Press
 
 ## Author
 
 Project developed by Giorgia La Torre (student id 4441614) as part of a university reinforcement learning project.
+
 
 
 
