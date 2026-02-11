@@ -219,11 +219,20 @@ Reducing the survival reward to a sufficiently small value restored the dominanc
 
 ### Evaluation Performance
 
-[Grafico 1: NFQ vs DQN – eval]
-[Grafico 2: DQN vs DDQN – eval]
+[Graph 1: NFQ vs DQN – eval] 
+<p align="center">
+   <img src="nfq_vs_dqn_eval.png" width="50%" alt="Eval nfq vs dqn">
+   <figcaption align="center">Schema of the logic of the dashboard</figcaption> 
+</p>
 
 **NFQ vs DQN – Evaluation Performance.**  
 Mean evaluation return as a function of environment interaction steps, aggregated across three random seeds. The shaded area represents the minimum and maximum performance observed across seeds. Evaluation is performed using a greedy policy, providing a clean estimate of policy quality.
+
+[Graph 2: DQN vs DDQN – eval]
+<p align="center">
+   <img src="dqn_vs_ddqn_eval.png" width="50%" alt="Eval dqn vs ddqn">
+   <figcaption align="center">Schema of the logic of the dashboard</figcaption> 
+</p>
 
 **DQN vs DDQN – Evaluation Performance.**  
 Comparison of evaluation returns for DQN and Double DQN under identical experimental conditions. Results are aggregated across three random seeds and reported as mean with min–max variability bands. The improved stability and higher asymptotic performance of Double DQN highlight the impact of reducing overestimation bias.
@@ -231,11 +240,20 @@ Comparison of evaluation returns for DQN and Double DQN under identical experime
 
 ### Training Dynamics
 
-[Grafico 3: DQN vs NFQ – training episodes]
-[Grafico 4: DQN vs DDQN – training episodes]
+[Graph 3: DQN vs NFQ – training episodes]
+<p align="center">
+   <img src="dqn_vs_nfq_episodes.png" width="50%" alt="epis nfq vs dqn">
+   <figcaption align="center">Schema of the logic of the dashboard</figcaption> 
+</p>
 
 **DQN vs NFQ – Training Episode Returns.**  
 Average episode return observed during training as a function of training episodes. These curves reflect learning dynamics under ε-greedy exploration and are influenced by exploration noise. They are reported to illustrate differences in learning stability rather than final policy quality.
+
+[Graph 4: DQN vs DDQN – training episodes]
+<p align="center">
+   <img src="dqn_vs_ddqn_episodes.png" width="50%" alt="epis dqn vs ddqn">
+   <figcaption align="center">Schema of the logic of the dashboard</figcaption> 
+</p>
 
 **DQN vs DDQN – Training Episode Returns.**  
 Training episode returns for DQN and Double DQN under ε-greedy exploration. While both algorithms exhibit similar learning trends during training, evaluation-based results provide a clearer comparison of final policy performance.
@@ -365,6 +383,7 @@ python compare_pairs_episodes.py --results results --seeds 0 1 2 --smooth 50 --o
   https://github.com/robertoschiavone/flappy-bird-env
 - Berta, R. (2025). *Neural Fitted Q-Iteration*. Course lecture notes, Reinforcement Learning.
 - Berta, R. (2025). *Deep Q-Networks and Extensions*. Course lecture notes, Reinforcement Learning.
+
 
 
 
