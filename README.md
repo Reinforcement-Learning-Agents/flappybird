@@ -7,9 +7,8 @@ Neural Fitted Q-Iteration, DQN and Double DQN
 </p>
 
 ## Purpose of the Project
-
-This repository collects a set of reinforcement learning agents developed to study and compare value-based learning algorithms in a controlled environment.  
-The project was carried out as part of an academic reinforcement learning assignment and focuses on the implementation, training, and evaluation of different approaches for learning control policies from interaction.
+  
+This project was carried out as part of an academic reinforcement learning assignment and focuses on the implementation, training, and evaluation of different approaches for learning control policies from interaction.
 
 The main objective is to analyze how classical Deep Q-Learning methods and batch reinforcement learning techniques behave when applied to the same task, under comparable experimental conditions. In particular, the project investigates the impact of algorithmic choices on learning stability, sample efficiency, and final performance.
 
@@ -393,6 +392,7 @@ python compare_training_pairs.py --results results --seeds 0 1 2 --smooth 50 --o
 ## Author
 
 Project developed by Giorgia La Torre (student id 4441614) as part of a university reinforcement learning project.
+
 
 
 
