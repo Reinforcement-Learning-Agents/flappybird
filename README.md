@@ -1,5 +1,5 @@
 # Reinforcement Learning for Flappy Bird
-DQN, Double DQN, and Neural Fitted Q-Iteration
+Neural Fitted Q-Iteration, DQN and Double DQN
 
 <p align="center">
     <img src="images/dqn_best_step475000_ret18.50-episode-3.gif" 
@@ -418,6 +418,7 @@ python compare_pairs_episodes.py --results results --seeds 0 1 2 --smooth 50 --o
   https://github.com/robertoschiavone/flappy-bird-env
 - Berta, R. (2025). *Neural Fitted Q-Iteration*. Course lecture notes, Reinforcement Learning.
 - Berta, R. (2025). *Deep Q-Networks and Extensions*. Course lecture notes, Reinforcement Learning.
+
 
 
 
