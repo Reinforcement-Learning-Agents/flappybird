@@ -2,7 +2,7 @@
 DQN, Double DQN, and Neural Fitted Q-Iteration
 
 <p align="center">
-    <img src="video/dqn_best_step475000_ret18.50-episode-3.gif"
+    <img src="dqn_best_step475000_ret18.50-episode-3.gif"
         alt="flappy bird"/>
 </p>
 
@@ -419,6 +419,7 @@ python compare_pairs_episodes.py --results results --seeds 0 1 2 --smooth 50 --o
   https://github.com/robertoschiavone/flappy-bird-env
 - Berta, R. (2025). *Neural Fitted Q-Iteration*. Course lecture notes, Reinforcement Learning.
 - Berta, R. (2025). *Deep Q-Networks and Extensions*. Course lecture notes, Reinforcement Learning.
+
 
 
 
