@@ -14,10 +14,10 @@ The main objective is to analyze how classical Deep Q-Learning methods and batch
 
 To this end, three algorithms are implemented and compared:
 - Neural Fitted Q-Iteration (NFQ),
-- Deep Q-Network (DQN),
-- Double Deep Q-Network (DDQN).
+- Deep Q- (DQN),
+- Double Deep Q- (DDQN).
 
-All agents are trained on the same environment and share a common network architecture and reward structure, allowing for a fair and systematic comparison.  
+All agents are trained on the same environment and share a common  architecture and reward structure, allowing for a fair and systematic comparison.  
 Beyond implementation, the project emphasizes reproducibility and experimental analysis, including multi-seed evaluation, aggregated performance metrics, and visual inspection of learning dynamics.
 
 ## Problem Description and Environment
@@ -40,7 +40,7 @@ The Flappy Bird task is formulated as a Markov Decision Process (MDP) where the 
 | State Space      | Low-dimensional continuous vector | Includes relative distances to the next obstacle and velocity. Captures essential dynamics while avoiding the overhead of raw pixel processing. |
 | Action Space     | "Discrete: {0,1}"                 | 0: No action; 1: Upward flap. This binary control is ideal for evaluating value-based methods.                                                  |
 | Reward Function  | Sparse + Survival Shaping         | +1 for passing pipes; +0.05 per step for survival. Shaping encourages exploration without distorting the primary goal.                          |
-| Function Approx. | Fully Connected Neural     | Shared architecture across algorithms to ensure that performance gains are due to the learning rule, not capacity.                              |
+| Function Approx. | Fully Connected Neural Network     | Shared architecture across algorithms to ensure that performance gains are due to the learning rule, not capacity.                              |
 | Optimization     | Stochastic Gradient Descent (SGD) | Minimizes Mean Squared TD Error. Chosen for its stable and interpretable dynamics in low-dimensional state spaces.                              |
 | Policy           | ϵ-greedy                          | Decaying schedule for DQN/DDQN; fixed ϵ for NFQ to ensure adequate coverage during batch collection.                                            |
 
@@ -56,8 +56,8 @@ The project evaluates three value-based reinforcement learning algorithms to sol
 
 **Selected Methods**
 - Neural Fitted Q-Iteration (NFQ): Used as a batch RL baseline. It frames value estimation as a regression problem, alternating between data collection and offline optimization.
-- Deep Q- (DQN): An online method that introduces a replay buffer and a target  to stabilize training in deep function approximation.
-- Double Deep Q- (DDQN): An evolution of DQN designed to mitigate the overestimation of action values by decoupling action selection from evaluation.
+- Deep Q-Network (DQN): An online method that introduces a replay buffer and a target  to stabilize training in deep function approximation.
+- Double Deep Q-Network (DDQN): An evolution of DQN designed to mitigate the overestimation of action values by decoupling action selection from evaluation.
 
 **Implementation Strategy**
 Instead of complex architectures, all agents share a fully connected neural  and are optimized via SGD. This setup ensures that differences in performance, such as DDQN’s superior stability or NFQ’s sample inefficiency, are directly attributable to the algorithmic logic rather than representational capacity. Hyperparameters like the discount factor $\gamma$ and the $\epsilon$-greedy schedule were kept consistent across runs to ensure a fair systematic comparison.
@@ -97,7 +97,7 @@ All experiments are conducted under a controlled and consistent setup to ensure 
 
 ### Training
 
-Each agent is trained for a fixed number of episodes using the same environment configuration, reward structure, and network architecture. For DQN and DDQN, training is fully online, with the agent continuously interacting with the environment and updating the Q-network during learning. For NFQ, training follows a batch-oriented protocol, where experience is first collected and then used for fitted Q-iteration updates.
+Each agent is trained for a fixed number of episodes using the same environment configuration, reward structure, and  architecture. For DQN and DDQN, training is fully online, with the agent continuously interacting with the environment and updating the Q- during learning. For NFQ, training follows a batch-oriented protocol, where experience is first collected and then used for fitted Q-iteration updates.
 
 Exploration is handled through ε-greedy policies, with algorithm-specific strategies:
 - a fixed ε is used for NFQ during data collection,
@@ -105,7 +105,7 @@ Exploration is handled through ε-greedy policies, with algorithm-specific strat
 
 ### Multi-Seed Evaluation
 
-To improve robustness and reproducibility, each algorithm is trained using multiple random seeds. Specifically, three independent runs are performed for each agent, each initialized with a different seed affecting network initialization, environment dynamics, and exploration behavior.
+To improve robustness and reproducibility, each algorithm is trained using multiple random seeds. Specifically, three independent runs are performed for each agent, each initialized with a different seed affecting  initialization, environment dynamics, and exploration behavior.
 
 All reported results are aggregated across these runs. Performance curves are summarized using mean values, along with variability bands computed from the minimum and maximum returns observed across seeds.
 
@@ -252,7 +252,7 @@ I trained each algorithm respectively with seed 0, 1 and 2.
 Each training run saves its outputs to a dedicated directory called "algorithm_seedX" (for example ddqn_seed0), which contains all artifacts required for analysis, comparison, and reproducibility:
 - plots/: Generated figures, including evaluation curves (e.g., evaluation return vs environment steps) and other run-specific visualizations;
 - videos/: Optional recordings of the agent interacting with the environment using the learned policy, intended for qualitative inspection;
-- Model checkpoints (*.pt): Saved network weights, including the best-performing model observed during evaluation and the final model at the end of training;
+- Model checkpoints (*.pt): Saved  weights, including the best-performing model observed during evaluation and the final model at the end of training;
 - eval_scores.npy: NumPy array storing evaluation returns collected during periodic greedy evaluations;
 - eval_steps.npy: NumPy array storing the corresponding environment step counts for each evaluation;
 - metrics.csv: CSV file containing logged training and evaluation metrics used for post-hoc analysis and for generating aggregated comparison plots.
@@ -340,7 +340,7 @@ python compare_training_pairs.py --results results --seeds 0 1 2 --smooth 50 --o
 - R. Schiavone, *Flappy Bird Gym Environment*, GitHub repository,  
   https://github.com/robertoschiavone/flappy-bird-env
 - Berta, R. (2025). *Neural Fitted Q-Iteration*. Course lecture notes, Reinforcement Learning.
-- Berta, R. (2025). *Deep Q-Networks and Extensions*. Course lecture notes, Reinforcement Learning.
+- Berta, R. (2025). *Deep Q-s and Extensions*. Course lecture notes, Reinforcement Learning.
 - Gymnasium: Farama Foundation. Gymnasium: An open source interface for reinforcement learning algorithms. https://gymnasium.farama.org/
 - PyTorch: Paszke, A., et al. PyTorch: An Imperative Style, High-Performance Deep Learning Library. https://pytorch.org/
 - DQN: Mnih, V., et al. (2015). Human-level control through deep reinforcement learning. Nature.
@@ -352,6 +352,7 @@ python compare_training_pairs.py --results results --seeds 0 1 2 --smooth 50 --o
 ## Author
 
 Project developed by Giorgia La Torre (student id 4441614) as part of a university reinforcement learning project.
+
 
 
 
