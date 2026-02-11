@@ -256,6 +256,14 @@ All reported trends are consistent across multiple random seeds, strengthening t
 
 This section describes how to reproduce the experiments and generate the results reported in this repository.
 
+### Limitations
+
+While the implemented agents demonstrate successful learning, several limitations were observed during the experimental phase:
+- Sensitivity to Reward Shaping: The reliance on a survival reward ($+0.05$) highlights a weakness in sparse reward handling. Without this shaping, convergence was significantly slower, suggesting that the agents might struggle in environments where "safe" intermediate rewards cannot be easily defined.
+- Sample Efficiency of NFQ: As a batch method, NFQ proved less efficient than online methods in this high-frequency control task. Its performance was heavily bottlenecked by the quality and diversity of the initial data collection phase.
+- Overfitting to Specific Dynamics: The agents were trained on a low-dimensional state representation. While effective, this model would likely fail if moved to an image-based input (pixels) without a significant redesign of the architecture (e.g., adding Convolutional layers) and increased computational resources.
+- Stability vs. Performance Trade-off: The use of SGD provided stable updates, but at the cost of slower convergence compared to adaptive optimizers like Adam. Furthermore, even with Double DQN, some variance between seeds remains, indicating that the policy is still sensitive to random initialization.
+
 ### Requirements
 
 The project requires Python 3.10 or later. The main dependencies are:
@@ -392,6 +400,7 @@ python compare_training_pairs.py --results results --seeds 0 1 2 --smooth 50 --o
 ## Author
 
 Project developed by Giorgia La Torre (student id 4441614) as part of a university reinforcement learning project.
+
 
 
 
