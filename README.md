@@ -40,7 +40,7 @@ The Flappy Bird task is formulated as a Markov Decision Process (MDP) where the 
 | State Space      | Low-dimensional continuous vector | Includes relative distances to the next obstacle and velocity. Captures essential dynamics while avoiding the overhead of raw pixel processing. |
 | Action Space     | "Discrete: {0,1}"                 | 0: No action; 1: Upward flap. This binary control is ideal for evaluating value-based methods.                                                  |
 | Reward Function  | Sparse + Survival Shaping         | +1 for passing pipes; +0.05 per step for survival. Shaping encourages exploration without distorting the primary goal.                          |
-| Function Approx. | Fully Connected Neural Network    | Shared architecture across algorithms to ensure that performance gains are due to the learning rule, not capacity.                              |
+| Function Approx. | Fully Connected Neural     | Shared architecture across algorithms to ensure that performance gains are due to the learning rule, not capacity.                              |
 | Optimization     | Stochastic Gradient Descent (SGD) | Minimizes Mean Squared TD Error. Chosen for its stable and interpretable dynamics in low-dimensional state spaces.                              |
 | Policy           | ϵ-greedy                          | Decaying schedule for DQN/DDQN; fixed ϵ for NFQ to ensure adequate coverage during batch collection.                                            |
 
@@ -56,18 +56,18 @@ The project evaluates three value-based reinforcement learning algorithms to sol
 
 **Selected Methods**
 - Neural Fitted Q-Iteration (NFQ): Used as a batch RL baseline. It frames value estimation as a regression problem, alternating between data collection and offline optimization.
-- Deep Q-Network (DQN): An online method that introduces a replay buffer and a target network to stabilize training in deep function approximation.
-- Double Deep Q-Network (DDQN): An evolution of DQN designed to mitigate the overestimation of action values by decoupling action selection from evaluation.
+- Deep Q- (DQN): An online method that introduces a replay buffer and a target  to stabilize training in deep function approximation.
+- Double Deep Q- (DDQN): An evolution of DQN designed to mitigate the overestimation of action values by decoupling action selection from evaluation.
 
 **Implementation Strategy**
-Instead of complex architectures, all agents share a fully connected neural network and are optimized via SGD. This setup ensures that differences in performance, such as DDQN’s superior stability or NFQ’s sample inefficiency, are directly attributable to the algorithmic logic rather than representational capacity. Hyperparameters like the discount factor $\gamma$ and the $\epsilon$-greedy schedule were kept consistent across runs to ensure a fair systematic comparison.
+Instead of complex architectures, all agents share a fully connected neural  and are optimized via SGD. This setup ensures that differences in performance, such as DDQN’s superior stability or NFQ’s sample inefficiency, are directly attributable to the algorithmic logic rather than representational capacity. Hyperparameters like the discount factor $\gamma$ and the $\epsilon$-greedy schedule were kept consistent across runs to ensure a fair systematic comparison.
 
 ### Software Stack
 
 The project is developed using Python and relies on the following main libraries:
 - **Gymnasium** for environment interaction,
 - **flappy-bird-gymnasium** for the Flappy Bird environment,
-- **PyTorch** for neural network modeling and optimization,
+- **PyTorch** for neural  modeling and optimization,
 - **NumPy** for numerical operations,
 - **Matplotlib** for logging and visualization of results.
 
@@ -79,29 +79,6 @@ The logs provide visibility into the following metrics:
 - Performance Metrics: Episode return and rolling average reward to track improvement.
 - Exploration Status: The current value of $\epsilon$ (epsilon), ensuring the decay schedule is progressing as intended.
 - Optimization: Loss values for each update to monitor the stability of the SGD optimization.
-
-### Network Architecture
-
-All agents use the same fully connected neural network architecture to approximate the action-value function. The network takes the environment state as input and outputs Q-values for all available actions. Hidden layers with nonlinear activations are used to enable function approximation over the continuous state space.
-
-I kept the architecture fixed across algorithms to ensures that performance differences arise from algorithmic choices rather than representational capacity.
-
-### Training Loop and Interaction
-
-Agents interact with the environment following a standard reinforcement learning loop:
-1. observe the current state,
-2. select an action according to the current behavior policy,
-3. execute the action in the environment,
-4. receive the next state and reward,
-5. store or process the transition according to the selected algorithm.
-
-For DQN and DDQN, transitions are stored in a replay buffer and sampled uniformly during optimization. For NFQ, transitions are collected into batches and used for offline-style fitted Q-iteration updates.
-
-### Optimization
-
-The Q-network parameters are optimized by minimizing the mean squared temporal-difference error. Optimization is performed using stochastic gradient descent (SGD), which proved sufficient given the low-dimensional state representation of the environment and allowed for stable and interpretable training dynamics.
-
-Target networks are used for DQN and DDQN and are periodically synchronized with the online network to stabilize learning.
 
 ### Logging and Experiment Organization
 
@@ -159,12 +136,6 @@ Across all experiments, Double DQN consistently achieves higher and more stable 
 
 While individual evaluation curves exhibit variability across random seeds, the aggregated results show a clear upward trend in performance as training progresses. Variability bands highlight that Double DQN maintains a tighter performance range, indicating improved stability.
 
-### Training Dynamics
-
-Training episode returns provide insight into the learning dynamics and stability of each algorithm. DQN demonstrates a steady improvement over time but exhibits higher variance, particularly in later training stages, where occasional performance drops are observed.
-
-NFQ displays significantly different behavior compared to online methods. Despite initial improvements, its performance saturates at a lower level and remains highly sensitive to exploration quality.
-
 ### Impact of Reward Shaping
 
 Preliminary experiments revealed that the magnitude of the survival reward plays a crucial role in shaping agent behavior. When the survival reward was set too high, agents learned conservative strategies that prioritized staying alive rather than successfully passing pipes.
@@ -172,6 +143,8 @@ Preliminary experiments revealed that the magnitude of the survival reward plays
 Reducing the survival reward to a sufficiently small value restored the dominance of the environment-defined pipe-passing reward and led to more goal-oriented behavior. This highlights the importance of carefully balancing rewards.
 
 ### Evaluation Performance
+
+Training episode returns provide insight into the learning dynamics and stability of each algorithm.
 
 [Graph 1: NFQ vs DQN – eval] 
 <p align="center">
@@ -379,6 +352,7 @@ python compare_training_pairs.py --results results --seeds 0 1 2 --smooth 50 --o
 ## Author
 
 Project developed by Giorgia La Torre (student id 4441614) as part of a university reinforcement learning project.
+
 
 
 
