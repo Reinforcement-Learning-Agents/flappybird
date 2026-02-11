@@ -226,8 +226,7 @@ Reducing the survival reward to a sufficiently small value restored the dominanc
 
 [Graph 1: NFQ vs DQN – eval] 
 <p align="center">
-   <img src="images/nfq_vs_dqn_eval.png" width="80%" alt="Eval nfq vs dqn">
-   <figcaption align="center">Schema of the logic of the dashboard</figcaption> 
+   <img src="images/nfq_vs_dqn_eval.png" width="80%" alt="Eval nfq vs dqn"> 
 </p>
 
 **NFQ vs DQN – Evaluation Performance.**  
@@ -236,7 +235,6 @@ Mean evaluation return as a function of environment interaction steps, aggregate
 [Graph 2: DQN vs DDQN – eval]
 <p align="center">
    <img src="images/dqn_vs_ddqn_eval.png" width="80%" alt="Eval dqn vs ddqn">
-   <figcaption align="center">Schema of the logic of the dashboard</figcaption> 
 </p>
 
 **DQN vs DDQN – Evaluation Performance.**  
@@ -247,7 +245,6 @@ Example evaluation curve from a single representative DDQN run:
 
 <p align="center">
    <img src="images/eval_curve_ddqn_seed2.png" width="50%" alt="Eval dqn vs ddqn">
-   <figcaption align="center">Schema of the logic of the dashboard</figcaption> 
 </p>
 
 
@@ -256,7 +253,6 @@ Example evaluation curve from a single representative DDQN run:
 [Graph 3: DQN vs NFQ – training episodes]
 <p align="center">
    <img src="images/dqn_vs_nfq_episodes.png" width="80%" alt="epis nfq vs dqn">
-   <figcaption align="center">Schema of the logic of the dashboard</figcaption> 
 </p>
 
 **DQN vs NFQ – Training Episode Returns.**  
@@ -265,7 +261,6 @@ Average episode return observed during training as a function of training episod
 [Graph 4: DQN vs DDQN – training episodes]
 <p align="center">
    <img src="images/dqn_vs_ddqn_episodes.png" width="80%" alt="epis dqn vs ddqn">
-   <figcaption align="center">Schema of the logic of the dashboard</figcaption> 
 </p>
 
 **DQN vs DDQN – Training Episode Returns.**  
@@ -361,16 +356,14 @@ Each training run saves its outputs to a dedicated directory called "algorithm_s
 Aggregated comparison plots across multiple random seeds can be generated using the provided analysis scripts. These scripts load the metrics saved by individual runs, align evaluation curves, and compute aggregated statistics such as mean and variability across seeds.
 
 The following scripts are provided:
-- `compare.py` – generates aggregated evaluation curves (mean ± min/max) for multiple algorithms and produces summary statistics.
-- `compare_pairs.py` – generates pairwise aggregated evaluation comparisons between selected algorithms.
-- `compare_pairs_episodes.py` – generates pairwise comparisons based on training episode returns to analyze learning dynamics.
+- `compare_eval_pairs.py` – generates pairwise aggregated evaluation comparisons between selected algorithms.
+- `compare_training_pairs.py` – generates pairwise comparisons based on training episode returns to analyze learning dynamics.
 
 To run the analysis scripts, execute the following commands after completing the training runs:
 
 ```bash
-python compare.py --results results --seeds 0 1 2 --smooth 3 --outdir compare_out
-python compare_pairs.py --results results --seeds 0 1 2 --smooth 3 --outdir compare_pairs_out
-python compare_pairs_episodes.py --results results --seeds 0 1 2 --smooth 50 --outdir compare_pairs_out
+python compare_eval_pairs.py --results results --seeds 0 1 2 --smooth 3 --outdir compare_pairs_eval
+python compare_training_pairs.py --results results --seeds 0 1 2 --smooth 50 --outdir compare_pairs_episodes
 ```
 
 ## Repository Structure
@@ -418,6 +411,7 @@ python compare_pairs_episodes.py --results results --seeds 0 1 2 --smooth 50 --o
   https://github.com/robertoschiavone/flappy-bird-env
 - Berta, R. (2025). *Neural Fitted Q-Iteration*. Course lecture notes, Reinforcement Learning.
 - Berta, R. (2025). *Deep Q-Networks and Extensions*. Course lecture notes, Reinforcement Learning.
+
 
 
 
