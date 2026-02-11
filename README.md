@@ -1,6 +1,8 @@
 # Reinforcement Learning for Flappy Bird
 DQN, Double DQN, and Neural Fitted Q-Iteration
 
+<video src="videos/dqn_best_step475000_ret18.50-episode-3.mp4" controls></video>
+
 ## Purpose of the Project
 
 This repository collects a set of reinforcement learning agents developed to study and compare value-based learning algorithms in a controlled environment.  
@@ -237,6 +239,14 @@ Mean evaluation return as a function of environment interaction steps, aggregate
 **DQN vs DDQN – Evaluation Performance.**  
 Comparison of evaluation returns for DQN and Double DQN under identical experimental conditions. Results are aggregated across three random seeds and reported as mean with min–max variability bands. The improved stability and higher asymptotic performance of Double DQN highlight the impact of reducing overestimation bias.
 
+In addition to aggregated results across multiple seeds, we report a representative single-run evaluation curve and rollout video to provide qualitative insight into the learned behavior of the agent.
+Example evaluation curve from a single representative DDQN run:
+
+<p align="center">
+   <img src="eval_curve_ddqn_seed2.png" width="80%" alt="Eval dqn vs ddqn">
+   <figcaption align="center">Schema of the logic of the dashboard</figcaption> 
+</p>
+
 
 ### Training Dynamics
 
@@ -314,10 +324,33 @@ I trained each algorithm respectively with seed 0, 1 and 2.
 Each training run saves its outputs to a dedicated directory called "algorithm_seedX" (for example ddqn_seed0), which contains all artifacts required for analysis, comparison, and reproducibility:
 - plots/: Generated figures, including evaluation curves (e.g., evaluation return vs environment steps) and other run-specific visualizations;
 - videos/: Optional recordings of the agent interacting with the environment using the learned policy, intended for qualitative inspection;
-- Model checkpoints (*.pt): Saved network weights, typically including the best-performing model observed during evaluation and the   final model at the end of training;
+- Model checkpoints (*.pt): Saved network weights, including the best-performing model observed during evaluation and the final model at the end of training;
 - eval_scores.npy: NumPy array storing evaluation returns collected during periodic greedy evaluations;
 - eval_steps.npy: NumPy array storing the corresponding environment step counts for each evaluation;
 - metrics.csv: CSV file containing logged training and evaluation metrics used for post-hoc analysis and for generating aggregated comparison plots.
+
+```
+.
+└── algorithm_seedX/                      # Output directory for a single training run (specific algorithm + seed)
+    ├── plots/                            # Run-specific visualizations generated during or after training
+    │   └── eval_curve.png                # Evaluation return vs environment steps (greedy policy)
+    │
+    ├── videos/                           # Optional recordings of the agent during evaluation
+    │   └── algorithm_best_step_retY-episodeZ
+    │                                      # Naming convention:
+    │                                      # Y = evaluation return achieved during the recorded run
+    │                                      # Z = index of the evaluation episode used for video recording
+    │
+    ├── _algorithm_flappy_best.pt         # Model checkpoint with the highest evaluation return
+    ├── _algorithm_flappy_latest.pt       # Model checkpoint saved at the end of training
+    │
+    ├── eval_scores.npy                   # Evaluation returns recorded at periodic evaluation intervals
+    ├── eval_steps.npy                    # Environment steps corresponding to each evaluation point
+    │
+    └── metrics.csv                       # Logged training and evaluation metrics used for analysis and aggregation
+
+```
+
 
 ### Generating Comparison Plots
 
@@ -383,6 +416,7 @@ python compare_pairs_episodes.py --results results --seeds 0 1 2 --smooth 50 --o
   https://github.com/robertoschiavone/flappy-bird-env
 - Berta, R. (2025). *Neural Fitted Q-Iteration*. Course lecture notes, Reinforcement Learning.
 - Berta, R. (2025). *Deep Q-Networks and Extensions*. Course lecture notes, Reinforcement Learning.
+
 
 
 
