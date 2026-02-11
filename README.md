@@ -338,7 +338,7 @@ Each training run saves its outputs to a dedicated directory called "algorithm_s
     ├── plots/                            # Run-specific visualizations generated during or after training
     │   └── eval_curve.png                # Evaluation return vs environment steps (greedy policy)
     │
-    ├── videos/                           # Optional recordings of the agent during evaluation
+    ├── videos/                           # Recordings of the agent during evaluation
     │   └── algorithm_best_step_retY-episodeZ
     │                                      # Naming convention:
     │                                      # Y = evaluation return achieved during the recorded run
@@ -387,11 +387,15 @@ python compare_pairs_episodes.py --results results --seeds 0 1 2 --smooth 50 --o
 │   ├── nfq_seed1/
 │   └── nfq_seed2/
 │
-├── compare_pairs_out/               # Aggregated evaluation comparison outputs
-│   ├── nfq_vs_dqn_eval.png               # Evaluation plots (mean ± min/max)
-│   └── dqn_vs_ddqn_eval.png              # Evaluation plots (mean ± min/max)
+├── compare_pairs_eval/               # Aggregated evaluation comparison outputs
+│   ├── nfq_vs_dqn_eval.png          # Evaluation plots (mean ± min/max)
+│   ├── dqn_vs_ddqn_eval.png         # Evaluation plots (mean ± min/max)
+│   ├── nfq_mean_min_max.csv         # Aggregated statistics
+│   ├── dqn_mean_min_max.csv
+│   ├── ddqn_mean_min_max.csv
+│   └── summary_pairs.csv            # Summary comparison table
 │
-├── plots_pairs/                     # Aggregated training-dynamics plots (episode-based)
+├── compare_pairs_episodes/          # Aggregated training-dynamics plots (episode-based)
 │   ├── dqn_vs_ddqn_episodes.png     # Episode return comparison during training 
 │   └── dqn_vs_nfq_episodes.png      # Episode return comparison during training 
 │
@@ -414,6 +418,7 @@ python compare_pairs_episodes.py --results results --seeds 0 1 2 --smooth 50 --o
   https://github.com/robertoschiavone/flappy-bird-env
 - Berta, R. (2025). *Neural Fitted Q-Iteration*. Course lecture notes, Reinforcement Learning.
 - Berta, R. (2025). *Deep Q-Networks and Extensions*. Course lecture notes, Reinforcement Learning.
+
 
 
 
