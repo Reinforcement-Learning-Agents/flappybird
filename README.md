@@ -2,7 +2,7 @@
 DQN, Double DQN, and Neural Fitted Q-Iteration
 
 <p align="center">
-    <img src="dqn_best_step475000_ret18.50-episode-3.gif"
+    <img src="video/dqn_best_step475000_ret18.50-episode-3.gif"
         alt="flappy bird"/>
 </p>
 
@@ -226,7 +226,7 @@ Reducing the survival reward to a sufficiently small value restored the dominanc
 
 [Graph 1: NFQ vs DQN – eval] 
 <p align="center">
-   <img src="nfq_vs_dqn.png" width="80%" alt="Eval nfq vs dqn">
+   <img src="images/nfq_vs_dqn_eval.png" width="80%" alt="Eval nfq vs dqn">
    <figcaption align="center">Schema of the logic of the dashboard</figcaption> 
 </p>
 
@@ -235,7 +235,7 @@ Mean evaluation return as a function of environment interaction steps, aggregate
 
 [Graph 2: DQN vs DDQN – eval]
 <p align="center">
-   <img src="dqn_vs_ddqn.png" width="80%" alt="Eval dqn vs ddqn">
+   <img src="images/dqn_vs_ddqn_eval.png" width="80%" alt="Eval dqn vs ddqn">
    <figcaption align="center">Schema of the logic of the dashboard</figcaption> 
 </p>
 
@@ -246,7 +246,7 @@ In addition to aggregated results across multiple seeds, we report a representat
 Example evaluation curve from a single representative DDQN run:
 
 <p align="center">
-   <img src="eval_curve_ddqn_seed2.png" width="50%" alt="Eval dqn vs ddqn">
+   <img src="images/eval_curve_ddqn_seed2.png" width="50%" alt="Eval dqn vs ddqn">
    <figcaption align="center">Schema of the logic of the dashboard</figcaption> 
 </p>
 
@@ -255,7 +255,7 @@ Example evaluation curve from a single representative DDQN run:
 
 [Graph 3: DQN vs NFQ – training episodes]
 <p align="center">
-   <img src="dqn_vs_nfq_episodes.png" width="80%" alt="epis nfq vs dqn">
+   <img src="images/dqn_vs_nfq_episodes.png" width="80%" alt="epis nfq vs dqn">
    <figcaption align="center">Schema of the logic of the dashboard</figcaption> 
 </p>
 
@@ -264,7 +264,7 @@ Average episode return observed during training as a function of training episod
 
 [Graph 4: DQN vs DDQN – training episodes]
 <p align="center">
-   <img src="dqn_vs_ddqn_episodes.png" width="80%" alt="epis dqn vs ddqn">
+   <img src="images/dqn_vs_ddqn_episodes.png" width="80%" alt="epis dqn vs ddqn">
    <figcaption align="center">Schema of the logic of the dashboard</figcaption> 
 </p>
 
@@ -419,6 +419,7 @@ python compare_pairs_episodes.py --results results --seeds 0 1 2 --smooth 50 --o
   https://github.com/robertoschiavone/flappy-bird-env
 - Berta, R. (2025). *Neural Fitted Q-Iteration*. Course lecture notes, Reinforcement Learning.
 - Berta, R. (2025). *Deep Q-Networks and Extensions*. Course lecture notes, Reinforcement Learning.
+
 
 
 
