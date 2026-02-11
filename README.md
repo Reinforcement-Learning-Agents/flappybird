@@ -71,6 +71,15 @@ The project is developed using Python and relies on the following main libraries
 - **NumPy** for numerical operations,
 - **Matplotlib** for logging and visualization of results.
 
+### Real-Time Training Monitoring
+
+During the execution of the training scripts (`dqn_flappy.py`, `ddqn_flappy.py`, `nfq_flappy.py`), the progress is logged directly to the terminal to allow for real-time monitoring of the agent's evolution. 
+The logs provide visibility into the following metrics:
+- Episode Progress: Current episode number and total environment steps completed.
+- Performance Metrics: Episode return and rolling average reward to track improvement.
+- Exploration Status: The current value of $\epsilon$ (epsilon), ensuring the decay schedule is progressing as intended.
+- Optimization: Loss values for each update to monitor the stability of the SGD optimization.
+
 ### Network Architecture
 
 All agents use the same fully connected neural network architecture to approximate the action-value function. The network takes the environment state as input and outputs Q-values for all available actions. Hidden layers with nonlinear activations are used to enable function approximation over the continuous state space.
@@ -104,7 +113,6 @@ In particular, each run directory stores:
 - model checkpoints corresponding to the latest and best-performing policies.
 
 This directory-based organization ensures a clear separation between runs and enables systematic post-hoc analysis, aggregation across seeds, and full reproducibility of the experiments.
-
 
 ## Experimental Setup and Evaluation
 
@@ -371,6 +379,7 @@ python compare_training_pairs.py --results results --seeds 0 1 2 --smooth 50 --o
 ## Author
 
 Project developed by Giorgia La Torre (student id 4441614) as part of a university reinforcement learning project.
+
 
 
 
