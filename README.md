@@ -388,24 +388,19 @@ python compare_pairs_episodes.py --results results --seeds 0 1 2 --smooth 50 --o
 │   └── nfq_seed2/
 │
 ├── compare_pairs_out/               # Aggregated evaluation comparison outputs
-│   ├── nfq_vs_dqn.png               # Evaluation plots (mean ± min/max)
-│   ├── dqn_vs_ddqn.png              # Evaluation plots (mean ± min/max)
-│   ├── nfq_mean_min_max.csv         # Aggregated statistics
-│   ├── dqn_mean_min_max.csv
-│   ├── ddqn_mean_min_max.csv
-│   └── summary_pairs.csv            # Summary comparison table
+│   ├── nfq_vs_dqn_eval.png               # Evaluation plots (mean ± min/max)
+│   └── dqn_vs_ddqn_eval.png              # Evaluation plots (mean ± min/max)
 │
 ├── plots_pairs/                     # Aggregated training-dynamics plots (episode-based)
-│   ├── dqn_vs_ddqn_episodes.png
-│   └── dqn_vs_nfq_episodes.png
+│   ├── dqn_vs_ddqn_episodes.png     # Episode return comparison during training 
+│   └── dqn_vs_nfq_episodes.png      # Episode return comparison during training 
 │
 ├── dqn_flappy.py                    # DQN training script
 ├── ddqn_flappy.py                   # Double DQN training script
 ├── nfq_flappy.py                    # NFQ training script
 │
-├── compare.py                       # Aggregated analysis across algorithms and seeds
-├── compare_pairs.py                 # Pairwise evaluation comparison script
-├── compare_pairs_episodes.py        # Pairwise training-dynamics comparison script
+├── compare_eval_pairs.py            # Pairwise evaluation comparison script
+├── compare_training_pairs.py        # Pairwise training-dynamics comparison script
 │
 ├── test_flappy_gymnasium.py         # Environment sanity check script
 ├── README.md                        # Project documentation
@@ -419,6 +414,7 @@ python compare_pairs_episodes.py --results results --seeds 0 1 2 --smooth 50 --o
   https://github.com/robertoschiavone/flappy-bird-env
 - Berta, R. (2025). *Neural Fitted Q-Iteration*. Course lecture notes, Reinforcement Learning.
 - Berta, R. (2025). *Deep Q-Networks and Extensions*. Course lecture notes, Reinforcement Learning.
+
 
 
 
