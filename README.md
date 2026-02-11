@@ -32,46 +32,24 @@ All experiments are conducted using the `FlappyBird-v0` environment provided by 
 
 No modifications are applied to the environment dynamics. However, a mild reward shaping term is introduced to encourage longer survival and stabilize learning, while preserving the original structure of the task.
 
+## Reinforcement Learning Formulation 
 
-## Reinforcement Learning Formulation
+The Flappy Bird task is formulated as a Markov Decision Process (MDP) where the agent aims to maximize its cumulative reward through interaction with the environment. The problem is defined by the following components, designed to balance computational efficiency with learning stability.
 
-The Flappy Bird task is defined by a state space, an action space, a reward function, and a policy governing the agent’s behavior during training and evaluation.
+| Component        | Definition                        | Rationale & Design Choices                                                                                                                      |
+|------------------|-----------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------|
+| State Space      | Low-dimensional continuous vector | Includes relative distances to the next obstacle and velocity. Captures essential dynamics while avoiding the overhead of raw pixel processing. |
+| Action Space     | "Discrete: {0,1}"                 | 0: No action; 1: Upward flap. This binary control is ideal for evaluating value-based methods.                                                  |
+| Reward Function  | Sparse + Survival Shaping         | +1 for passing pipes; +0.05 per step for survival. Shaping encourages exploration without distorting the primary goal.                          |
+| Function Approx. | Fully Connected Neural Network    | Shared architecture across algorithms to ensure that performance gains are due to the learning rule, not capacity.                              |
+| Optimization     | Stochastic Gradient Descent (SGD) | Minimizes Mean Squared TD Error. Chosen for its stable and interpretable dynamics in low-dimensional state spaces.                              |
+| Policy           | ϵ-greedy                          | Decaying schedule for DQN/DDQN; fixed ϵ for NFQ to ensure adequate coverage during batch collection.                                            |
 
-### State Representation
-
-At each time step, the agent observes a low-dimensional continuous state vector provided by the environment. The state encodes the relative position and velocity of the bird with respect to the next obstacle, capturing the information necessary to make control decisions.
-
-The observation is converted into a one-dimensional `float32` vector and lightly clipped to avoid numerical instabilities. No additional feature engineering or frame stacking is applied.
-
-### Action Space
-
-The action space is discrete and consists of two possible actions:
-- **0**: do nothing (no flap),
-- **1**: apply an upward flap impulse.
-
-This formulation results in a simple binary control problem.
-
-### Reward Function
-
-The environment provides a sparse reward signal associated with progression through the episode and episode termination upon collision.  
-To encourage stable learning and longer survival, a small positive shaping reward is added at each non-terminal step. This shaping term promotes smoother exploration while preserving the original objective of the task.
-
-At each time step the agent receives:
-- a positive reward when a pipe is successfully passed (reward = +1, it's provided by the environment),
-- an additional small survival reward for each non-terminal transition (survival_reward: float = 0.05).
-  This shaping term is designed to encourage longer survival and to mitigate the difficulty of long-horizon credit assignment, while remaining secondary with respect to the primary task reward.
-
-  N.b. Preliminary experiments showed that using an excessively large survival reward led to undesired behaviors, with the agent prioritizing survival time over successfully passing pipes. This resulted in policies that avoided risk without achieving the main task objective. For this reason, the survival reward was progressively reduced and set to a sufficiently small value to act only as a learning aid rather than a dominant objective.
-
-No explicit terminal reward is introduced, and episode termination corresponds exclusively to failure states.
-
-### Policy
-
-During training, the agent follows an ε-greedy behavior policy derived from the learned action-value function. Exploration is controlled through:
-- a decaying ε schedule for DQN and Double DQN,
-- a fixed ε for Neural Fitted Q-Iteration, consistent with a batch reinforcement learning setting.
-
-During evaluation, the policy is purely greedy with respect to the learned Q-function.
+Design Justifications
+- State Preprocessing: Observations are converted to float32 and lightly clipped to prevent numerical instabilities during backpropagation, a critical step for SGD stability.
+- Reward Shaping Sensitivity: Preliminary experiments showed that "survival rewards" $> 0.05$ led to risk-averse agents that avoided pipes to stay alive longer. The current value was tuned to ensure pipe-     passing remains the dominant objective.
+- Optimization Choice: SGD was preferred over adaptive optimizers (like Adam) in this specific task to maintain tighter control over the learning dynamics and to better observe the differences in stability    between DQN and Double DQN.
+- Termination: Episodes terminate strictly upon collision, with no explicit negative terminal reward, letting the loss of future rewards act as the primary penalty.
 
 ## Algorithmic Approaches
 
@@ -411,6 +389,11 @@ python compare_training_pairs.py --results results --seeds 0 1 2 --smooth 50 --o
   https://github.com/robertoschiavone/flappy-bird-env
 - Berta, R. (2025). *Neural Fitted Q-Iteration*. Course lecture notes, Reinforcement Learning.
 - Berta, R. (2025). *Deep Q-Networks and Extensions*. Course lecture notes, Reinforcement Learning.
+
+## Author
+
+Project developed by Giorgia La Torre (student id 4441614) as part of a university reinforcement learning project.
+
 
 
 
